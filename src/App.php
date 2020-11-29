@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Controller\RedirectionController;
+
 class App
 {
-    public function run(): void
+
+    public function run(string $path, ?string $queryParameters): void
     {
-        echo 'test';
+        echo (new RedirectionController())->redirect($path, $queryParameters);
     }
 }
