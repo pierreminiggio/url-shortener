@@ -2,7 +2,8 @@
 
 namespace App\Repository;
 
-use App\Connection\DatabaseConnection;
+use PierreMiniggio\DatabaseConnection\DatabaseConnection;
+use PierreMiniggio\DatabaseConnection\DatabaseConnection\Exception\QueryException;
 use App\Entity\Redirection;
 
 class RedirectionRepository
@@ -12,8 +13,12 @@ class RedirectionRepository
     )
     {}
 
+    /**
+     * @throws QueryException
+     */
     public function findByFrom(string $from): ?Redirection
     {
+        
         $this->connection->start();
         $res = $this->connection->query(
             'SELECT id, from_path, to_url FROM redirection WHERE from_path = :from_path;',
@@ -21,7 +26,7 @@ class RedirectionRepository
                 ':from_path' => $from
             ]
         );
-
+        
         $this->connection->stop();
 
         if (! $res) {

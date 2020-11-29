@@ -2,6 +2,8 @@
 
 namespace App\Connection;
 
+use PierreMiniggio\DatabaseConnection\DatabaseConnection;
+
 class DatabaseConnectionFactory
 {
     public function makeFromConfig(): DatabaseConnection
@@ -12,7 +14,7 @@ class DatabaseConnectionFactory
             $config['host'],
             $config['database'],
             $config['username'],
-            $config['password']
+            $config['password'],
         );
     }
 }
