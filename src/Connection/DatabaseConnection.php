@@ -7,29 +7,33 @@ use PDOException;
 
 class DatabaseConnection
 {
-    private PDO $connection;
+
+    const UTF_8 = 'utf8';
+
+    private ?PDO $connection;
 
     public function __construct(
         private string $host,
-        private string $db,
+        private string $database,
         private string $username,
         private string $password,
+        private string $charset = self::UTF_8
     )
     {}
 
     /**
      * @throws PDOException
      */
-    public function connect(): void
+    public function start(): void
     {
         $this->connection = new PDO(
-            'mysql:host=' . $this->host . ';dbname=' . $this->db . ';charset=utf8',
+            'mysql:host=' . $this->host . ';dbname=' . $this->database . ';charset=' . $this->charset,
             $this->username,
             $this->password
         );
     }
 
-    public function disconnect(): void
+    public function stop(): void
     {
         $this->connection = null;
     }

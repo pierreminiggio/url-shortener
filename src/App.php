@@ -9,6 +9,10 @@ class App
 
     public function run(string $path, ?string $queryParameters): void
     {
-        echo (new RedirectionController())->redirect($path, $queryParameters);
+        if ($path === '/') {
+            echo 'home';
+        } else {
+            echo (new RedirectionController())->redirect(substr($path, 1), $queryParameters);
+        }
     }
 }

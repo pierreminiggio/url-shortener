@@ -2,19 +2,26 @@
 
 namespace App\Controller;
 
+use App\Connection\DatabaseConnectionFactory;
 use App\Repository\RedirectionRepository;
+use App\Template\ErrorTemplate;
+use App\Template\RedirectionTemplate;
 
 Class RedirectionController
 {
 
     public function redirect(string $path, ?string $queryParameters): string
     {
-        $entity = (new RedirectionRepository())->findByFrom($path);
+        $repository = new RedirectionRepository((new DatabaseConnectionFactory())->makeFromConfig());
+        $entity = $repository->findByFrom($path);
 
-        var_dump($entity->getId());
-        var_dump($entity->getFrom());
-        var_dump($entity->getTo());
+        if (! $entity) {
+            return (new ErrorTemplate())->render(404);
+        }
 
-        return 'test';
+        $newUrl = $entity->to . ($queryParameters ? ('?' . $queryParameters) : '');
+        header('Location: ' . $newUrl);
+
+        return (new RedirectionTemplate())->render($newUrl);
     }
 }
