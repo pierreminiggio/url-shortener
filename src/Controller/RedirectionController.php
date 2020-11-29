@@ -2,14 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Redirection;
+use App\Repository\RedirectionRepository;
 
 Class RedirectionController
 {
 
     public function redirect(string $path, ?string $queryParameters): string
     {
-        $entity = new Redirection(1, 'test', 'test');
+        $entity = (new RedirectionRepository())->findByFrom($path);
 
         var_dump($entity->getId());
         var_dump($entity->getFrom());
