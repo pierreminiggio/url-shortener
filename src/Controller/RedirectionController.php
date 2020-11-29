@@ -12,7 +12,8 @@ Class RedirectionController
 
     public function redirect(string $path, ?string $queryParameters): string
     {
-        $repository = new RedirectionRepository((new DatabaseConnectionFactory())->makeFromConfig());
+        $connection = (new DatabaseConnectionFactory())->makeFromConfig();
+        $repository = new RedirectionRepository($connection);
         $entity = $repository->findByFrom($path);
 
         if (! $entity) {
