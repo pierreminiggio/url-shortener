@@ -11,9 +11,9 @@ Class RedirectionController
     {
         $entity = new Redirection(1, 'test', 'test');
 
-        var_dump($entity->id);
-        var_dump($entity->from);
-        var_dump($entity->to);
+        var_dump($entity->getId());
+        var_dump($entity->getFrom());
+        var_dump($entity->getTo());
 
         return 'test';
     }
