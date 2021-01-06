@@ -25,4 +25,13 @@ Class RedirectionController
 
         return (new RedirectionTemplate())->render($newUrl);
     }
+
+    public function list(): string
+    {
+        $connection = (new DatabaseConnectionFactory())->makeFromConfig();
+        $repository = new RedirectionRepository($connection);
+        $redirections = $repository->findAll();
+
+        return (new RedirectionTemplate())->renderList($redirections);
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Template;
 
+use App\Entity\Redirection;
+
 class RedirectionTemplate
 {
 
@@ -9,6 +11,26 @@ class RedirectionTemplate
     {
         return <<<HTML
             <a href="$newUrl">Click here if the automatic redirection is not working ...</a>
+        HTML;
+    }
+
+    /**
+     * @param Redirection[] $redirections
+     */
+    public function renderList(array $redirections): string
+    {
+        $htmlRedirections = '';
+
+        foreach ($redirections as $redirection) {
+            $htmlRedirections .= <<<HTML
+                <li><a href="{$redirection->to}">{$redirection->from}</a></li>
+            HTML;
+        }
+
+        return <<<HTML
+            <ul>
+                $htmlRedirections
+            </ul>
         HTML;
     }
 }

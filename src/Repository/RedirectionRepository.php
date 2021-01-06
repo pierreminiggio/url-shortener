@@ -38,4 +38,32 @@ class RedirectionRepository
 
         return new Redirection($firstRes['id'], $firstRes['from_path'], $firstRes['to_url']);
     }
+
+    /**
+     * @returns Redirection[]
+     * 
+     * @throws QueryException
+     */
+    public function findAll(): array
+    {
+        
+        $this->connection->start();
+        $res = $this->connection->query(
+            'SELECT id, from_path, to_url FROM redirection ORDER BY from_path ASC;',
+            [
+                ':from_path' => $from
+            ]
+        );
+        
+        $this->connection->stop();
+
+        if (! $res) {
+
+            return [];
+        }
+
+        return array_map(function (array $entry): Redirection {
+            return new Redirection($entry['id'], $entry['from_path'], $entry['to_url']);
+        }, $res);
+    }
 }

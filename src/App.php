@@ -11,6 +11,8 @@ class App
     {
         if ($path === '/') {
             echo 'home';
+        } elseif ($path === '/all') {
+            echo (new RedirectionController())->list();
         } else {
             echo (new RedirectionController())->redirect(substr($path, 1), $queryParameters);
         }
