@@ -27,8 +27,17 @@ class RedirectionTemplate
             HTML;
         }
 
+        $redirectionsCount = count($redirections);
+        $title = 'Aucun lien';
+
+        if ($redirectionsCount === 1) {
+            $title = 'Le lien';
+        } elseif ($redirectionsCount) {
+            $title = 'Les ' . $redirectionsCount . ' liens';
+        }
+
         return <<<HTML
-            <h1>Tous les liens</h1>
+            <h1>$title</h1>
             <ul>
                 $htmlRedirections
             </ul>
