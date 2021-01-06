@@ -23,7 +23,7 @@ class RedirectionTemplate
 
         foreach ($redirections as $redirection) {
             $htmlRedirections .= <<<HTML
-                <li><a href="{$redirection->to}" target="_blank">/{$redirection->from}</a></li>
+                <li><a href="{$redirection->to}" target="_blank">{$redirection->from}</a></li>
             HTML;
         }
 
