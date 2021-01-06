@@ -23,11 +23,12 @@ class RedirectionTemplate
 
         foreach ($redirections as $redirection) {
             $htmlRedirections .= <<<HTML
-                <li><a href="{$redirection->to}">{$redirection->from}</a></li>
+                <li><a href="{$redirection->to}">/{$redirection->from}</a></li>
             HTML;
         }
 
         return <<<HTML
+            <h1>Tous les liens</h1>
             <ul>
                 $htmlRedirections
             </ul>

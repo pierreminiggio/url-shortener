@@ -50,9 +50,7 @@ class RedirectionRepository
         $this->connection->start();
         $res = $this->connection->query(
             'SELECT id, from_path, to_url FROM redirection ORDER BY from_path ASC;',
-            [
-                ':from_path' => $from
-            ]
+            []
         );
         
         $this->connection->stop();
