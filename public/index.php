@@ -2,7 +2,7 @@
 
 use App\App;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
 $requestUrl = $_SERVER['REQUEST_URI'];
 $queryParameters = ! empty($_SERVER['QUERY_STRING']) ? ('?' . $_SERVER['QUERY_STRING']) : null;
