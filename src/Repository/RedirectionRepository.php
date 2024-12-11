@@ -40,7 +40,7 @@ class RedirectionRepository
     }
 
     /**
-     * @returns Redirection[]
+     * @return Redirection[]
      * 
      * @throws QueryException
      */
