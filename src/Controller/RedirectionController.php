@@ -5,27 +5,36 @@ namespace App\Controller;
 use App\App;
 use App\Connection\DatabaseConnectionFactory;
 use App\Entity\Redirection;
+use App\Repository\ManagedLinksRepository;
 use App\Repository\RedirectionRepository;
 use App\Template\ErrorTemplate;
 use App\Template\RedirectionTemplate;
+use Exception;
 
 Class RedirectionController
 {
 
-    public function redirect(string $path, ?string $queryParameters): string
+    public function handleSingleArgumentPath(string $path, ?string $queryParameters): string
     {
         $connection = (new DatabaseConnectionFactory())->makeFromConfig();
         $repository = new RedirectionRepository($connection);
         $entity = $repository->findByFrom($path);
 
-        if (! $entity) {
-            return (new ErrorTemplate())->render(404);
+        if ($entity) {
+            $newUrl = $entity->to . ($queryParameters ? ('?' . $queryParameters) : '');
+            header('Location: ' . $newUrl);
+
+            return (new RedirectionTemplate())->render($newUrl);
         }
 
-        $newUrl = $entity->to . ($queryParameters ? ('?' . $queryParameters) : '');
-        header('Location: ' . $newUrl);
+        $managedLinksRepository = new ManagedLinksRepository();
+        $response = $managedLinksRepository->findUserProfile($path);
 
-        return (new RedirectionTemplate())->render($newUrl);
+        if ($response) {
+            return $response;
+        }
+
+        return (new ErrorTemplate())->render(404);
     }
 
     public function list(): string

@@ -19,7 +19,7 @@ class App
         } elseif ($path === '/' . static::$allurlsjsonUri) {
             echo (new RedirectionController())->listUrlsJson();
         } else {
-            echo (new RedirectionController())->redirect(substr($path, 1), $queryParameters);
+            echo (new RedirectionController())->handleSingleArgumentPath(substr($path, 1), $queryParameters);
         }
     }
 }
