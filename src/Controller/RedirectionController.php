@@ -14,27 +14,32 @@ use Exception;
 Class RedirectionController
 {
 
-    public function handleSingleArgumentPath(string $path, ?string $queryParameters): string
+    public function handleDynamicPath(string $path, ?string $queryParameters): string
     {
         $connection = (new DatabaseConnectionFactory())->makeFromConfig();
         $repository = new RedirectionRepository($connection);
         $entity = $repository->findByFrom($path);
 
         if ($entity) {
-            $newUrl = $entity->to . ($queryParameters ? ('?' . $queryParameters) : '');
-            header('Location: ' . $newUrl);
-
-            return (new RedirectionTemplate())->render($newUrl);
+            return $this->displayEntity($entity, $queryParameters);
         }
 
         $managedLinksRepository = new ManagedLinksRepository();
-        $response = $managedLinksRepository->findUserProfile($path);
+        $response = $managedLinksRepository->callApi($path);
 
-        if ($response) {
+        if ($response === null) {
+            return (new ErrorTemplate())->render(404);
+        }
+
+        if ($response instanceof Redirection) {
+            return $this->displayEntity($response, $queryParameters);
+        }
+
+        if (is_string($response)) {
             return $response;
         }
 
-        return (new ErrorTemplate())->render(404);
+        throw new Exception('Unexpected response');
     }
 
     public function list(): string
@@ -68,5 +73,13 @@ Class RedirectionController
         $repository = new RedirectionRepository($connection);
 
         return $repository->findAll();
+    }
+
+    private function displayEntity(Redirection $entity, ?array $queryParameters): string
+    {
+        $newUrl = $entity->to . ($queryParameters ? ('?' . $queryParameters) : '');
+        header('Location: ' . $newUrl);
+
+        return (new RedirectionTemplate())->render($newUrl);
     }
 }

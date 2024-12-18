@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Redirection;
 use Error;
 use Exception;
 
@@ -38,7 +39,7 @@ class ManagedLinksRepository
         $this->apiToken = $apiToken;
     }
 
-    public function findUserProfile(string $userSlug): ?string
+    public function callApi(string $userSlug): string|Redirection|null
     {
         $domain = $_SERVER['HTTP_HOST'] ?? null;
 
@@ -62,7 +63,32 @@ class ManagedLinksRepository
         $httpCode = curl_getinfo($curlRequest, CURLINFO_HTTP_CODE);
 
         if ($httpCode === 200) {
-            return $curlResponse;
+            $jsonResponse = json_decode($curlResponse, true);
+            $isJson = $jsonResponse !== null;
+
+            if (! $isJson) {
+                return $curlResponse;
+            }
+            
+            $id = $jsonResponse['id'] ?? null;
+
+            if (! $id) {
+                throw new Exception('No id in JSON');
+            }
+
+            $from = $jsonResponse['from'] ?? null;
+
+            if (! $from) {
+                throw new Exception('No from in JSON');
+            }
+
+            $to = $jsonResponse['to'] ?? null;
+
+            if (! $to) {
+                throw new Exception('No to in JSON');
+            }
+            
+            return new Redirection($id, $from, $to);
         }
 
         if ($httpCode === 404) {
