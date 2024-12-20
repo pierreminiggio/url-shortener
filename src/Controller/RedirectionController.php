@@ -69,12 +69,13 @@ Class RedirectionController
             mkdir($cacheFolder);
         }
 
-        $domainInfoFile = $cacheFolder . DIRECTORY_SEPARATOR . 'domain-infos.txt';
         $domain = $_SERVER['HTTP_HOST'] ?? null;
 
         if (! $domain) {
             throw new Exception('Empty $_SERVER[\'HTTP_HOST\']');
         }
+
+        $domainInfoFile = $cacheFolder . DIRECTORY_SEPARATOR . str_replace($domain, '.', '-') . '-domain-infos.txt';
 
         beforeCheckFile:
         if (! file_exists($domainInfoFile)) {
