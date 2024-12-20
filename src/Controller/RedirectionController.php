@@ -75,7 +75,7 @@ Class RedirectionController
             throw new Exception('Empty $_SERVER[\'HTTP_HOST\']');
         }
 
-        $domainInfoFile = $cacheFolder . DIRECTORY_SEPARATOR . str_replace($domain, '.', '-') . '-domain-infos.txt';
+        $domainInfoFile = $cacheFolder . DIRECTORY_SEPARATOR . str_replace('.', '-', $domain) . '-domain-infos.txt';
 
         beforeCheckFile:
         if (! file_exists($domainInfoFile)) {
