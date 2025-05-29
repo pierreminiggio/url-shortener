@@ -168,9 +168,9 @@ Class RedirectionController
         return $repository->findAll();
     }
 
-    private function displayEntity(Redirection $entity, ?array $queryParameters): string
+    private function displayEntity(Redirection $entity, ?string $queryParameters): string
     {
-        $newUrl = $entity->to . ($queryParameters ? ('?' . $queryParameters) : '');
+        $newUrl = $entity->to . ($queryParameters ? $queryParameters : '');
         header('Location: ' . $newUrl);
 
         return (new RedirectionTemplate())->render($newUrl);
