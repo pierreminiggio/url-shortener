@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Template\HomeTemplate;
 use Exception;
 
 class HomeController
@@ -13,7 +14,7 @@ class HomeController
         if (! $domain) {
             throw new Exception('Empty $_SERVER[\'HTTP_HOST\']');
         }
-        
+
         return (new HomeTemplate())->render($domain);
     }
 }

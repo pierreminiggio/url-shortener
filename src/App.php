@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Controller\HomeController;
 use App\Controller\RedirectionController;
 
 class App
@@ -13,7 +14,7 @@ class App
     public function run(string $path, ?string $queryParameters): void
     {
         if ($path === '/') {
-            echo 'home';
+            echo (new HomeController())->index();
         } elseif ($path === '/' . static::$allUri) {
             echo (new RedirectionController())->list();
         } elseif ($path === '/' . static::$allurlsjsonUri) {
