@@ -80,6 +80,9 @@ class HomeTemplate
                         
                         .code {
                             font-family: monospace
+                        }
+
+                        .collection-item.code {
                             background-color: #666666;
                         }
                         
