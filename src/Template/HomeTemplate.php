@@ -65,7 +65,7 @@ class HomeTemplate
             <html>
                 <head>
                     <meta charset='utf-8'>
-                    <title>Vous vous êtes égaré ?</title>
+                    <title>Tu t'es égaré ?</title>
                     <link href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css' rel='stylesheet'>
                     <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
                     <style>
@@ -99,8 +99,8 @@ class HomeTemplate
                 </head>
                 <body>
                     <div class='container'>
-                        <h3><i class='material-icons left'>explore_off</i>Vous vous êtes égaré ?</h3>
-                        <p>Oups ! Vous avez probablement fait une petite erreur en saisissant un lien. Ce domaine est habituellement utilisé comme réducteur de lien avec un des formats suivants :</p>
+                        <h3><i class='material-icons left'>explore_off</i>Tu t'es égaré ?</h3>
+                        <p>Oups ! Tu as probablement fait une petite erreur en saisissant un lien. Ce domaine est habituellement utilisé comme réducteur de lien avec un des formats suivants :</p>
                         <ul class='collection'>
                             <li class='collection-item code'>https://$domain/quelquechose</li>
                             <li class='collection-item code'>https://$domain/quelquechose/quelquechose</li>
