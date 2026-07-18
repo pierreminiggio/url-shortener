@@ -87,6 +87,7 @@ class HomeTemplate
                         <h4>Ou bien peut-être cherchais-tu un de ces projets ?</h4>
                         <div class='row'>
             HTML;
+            
             foreach ($ggioFrProjects as $project) {
                 $html .= <<<HTML
                             <div class='col s12 m6 l4'>
@@ -102,7 +103,8 @@ class HomeTemplate
                             </div>
                 HTML;
             }
-            $html .= <<<HTML  
+
+            $html .= <<<HTML
                         </div>
             HTML;
         }
