@@ -13,7 +13,7 @@ use DateInterval;
 use DateTime;
 use Exception;
 
-Class RedirectionController
+class RedirectionController
 {
 
     public function handleDynamicPath(string $path, ?string $queryParameters): string
