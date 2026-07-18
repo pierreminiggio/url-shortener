@@ -68,7 +68,27 @@ class HomeTemplate
                     <title>Vous vous êtes égaré ?</title>
                     <link href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css' rel='stylesheet'>
                     <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
-                    <style>body{background:#121212;color:#eee} .card{background:#1e1e1e}.code{font-family:monospace}.footer{padding:20px;text-align:center;color:#aaa}</style>
+                    <style>
+                        body {
+                            background: #121212;
+                            color: #eee
+                        }
+                        
+                        .card {
+                            background: #1e1e1e
+                        }
+                        
+                        .code {
+                            font-family: monospace
+                            background-color: #666666;
+                        }
+                        
+                        .footer {
+                            padding: 20px;
+                            text-align: center;
+                            color: #aaa
+                        }
+                    </style>
                 </head>
                 <body>
                     <div class='container'>
