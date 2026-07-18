@@ -73,6 +73,10 @@ class HomeTemplate
                             background: #121212;
                             color: #eee
                         }
+
+                        h4, .footer {
+                            margin-top: 3rem;
+                        }
                         
                         .card {
                             background: #1e1e1e
