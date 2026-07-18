@@ -133,6 +133,8 @@ class HomeTemplate
         }
         
         $html .= <<<HTML
+                        <h4>Ou sinon tu peux retrouver <a target='_blank' href='https://miniggiodev.fr'>mon site miniggiodev.fr</a></h4>    
+                        <p>Tu pourras y retrouver mes projets, mes vidéos, mes musiques et bien plus encore !</p>
                     </div>
                     <footer class='footer'><a target='_blank' href='https://miniggiodev.fr'>Pierre Miniggio</a> • <a target='_blank' href='https://miniggiodev.fr'>miniggiodev.fr</a></footer>
                     <script>if(history.length>1){const b=document.getElementById('back');const l=document.getElementById('backlink');let t='← Retourner';if(document.referrer){try{const h=new URL(document.referrer).hostname;const hide=['example.com','example.org','example.net','localhost','127.0.0.1'];t=hide.includes(h)?'← Retourner à la page précédente':'← Retourner sur '+h}catch(e){t='← Retourner à la page précédente'}}l.textContent=t;b.style.display='block';}</script>
