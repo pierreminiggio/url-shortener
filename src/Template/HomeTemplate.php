@@ -145,16 +145,19 @@ class HomeTemplate
                         if (history.length > 1) {
                             const b = document.getElementById('back');
                             const l = document.getElementById('backlink');
-                            let t = '← Retourner';
+                            const retournerPagePrecedente = '← Retourner à la page précédente';
+                            let t;
                             if (document.referrer) {
                                 try {
                                     const h = new URL(document.referrer).hostname;
                                     console.log(h)
                                     const hide = ['example.com', 'example.org', 'example.net', 'localhost', '127.0.0.1'];
-                                    t = hide.includes(h) ? '← Retourner à la page précédente' : '← Retourner sur ' + h;
+                                    t = hide.includes(h) ? retournerPagePrecedente : '← Retourner sur ' + h;
                                 } catch (e) {
-                                    t = '← Retourner à la page précédente';
+                                    t = retournerPagePrecedente;
                                 }
+                            } else {
+                                t = retournerPagePrecedente;
                             }
                             l.textContent = t;
                             b.style.display = 'block';
