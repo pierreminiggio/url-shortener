@@ -54,7 +54,9 @@ class ManagedLinksRepository
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/json',
                 'Authorization: Bearer ' . $this->apiToken
-            ]
+            ],
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_CONNECTTIMEOUT => 20
         ]);
 
         $curlResponse = curl_exec($curlRequest);
