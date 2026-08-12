@@ -56,7 +56,8 @@ class ManagedLinksRepository
                 'Authorization: Bearer ' . $this->apiToken
             ],
             CURLOPT_TIMEOUT => 30,
-            CURLOPT_CONNECTTIMEOUT => 20
+            CURLOPT_CONNECTTIMEOUT => 20,
+            CURLOPT_MAXREDIRS => 3
         ]);
 
         $curlResponse = curl_exec($curlRequest);
