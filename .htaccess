@@ -1,9 +1,62 @@
 RewriteEngine on
-
 RewriteBase /
+
+# ============================================
+# Block common malicious/probe request patterns
+# (runs first, before HTTPS redirect and routing)
+# ============================================
+
+# Block dotfiles and dot-directories anywhere in the path
+# (.env, .git, .aws, .ssh, .docker, .vscode, .svn, .npmrc, etc.)
+RewriteCond %{REQUEST_URI} (^|/)\.[a-zA-Z0-9_-] [NC]
+RewriteRule .* - [F,L]
+
+# Block common credential/secret filenames regardless of path depth
+RewriteCond %{REQUEST_URI} (credentials\.(json|db|yml)|rootkey\.csv|\.aws/credentials|application_default_credentials|serviceAccountKey|firebase-adminsdk|firebase-service-account|service[-_]account) [NC]
+RewriteRule .* - [F,L]
+
+# Block WordPress-specific probe paths
+RewriteCond %{REQUEST_URI} (wp-content|wp-includes|wp-admin|wp-json|wp-login|xmlrpc\.php|wp-config) [NC]
+RewriteRule .* - [F,L]
+
+# Block common backup/dump file extensions
+RewriteCond %{REQUEST_URI} \.(bak|old|swp|sql|tar|tar\.gz|zip|log|orig|save)$ [NC]
+RewriteRule .* - [F,L]
+
+# Block CI/CD, IDE, and dev-tool config probes
+RewriteCond %{REQUEST_URI} (\.github/|\.gitlab-ci|\.circleci|\.vscode/|\.idea/|\.cursor/|\.codex/|\.continue/|\.claude|\.mcp\.json|\.aider\.conf|docker-compose\.ya?ml|Dockerfile|terraform\.tfstate) [NC]
+RewriteRule .* - [F,L]
+
+# Block SSH/PGP/TLS key and cert probes
+RewriteCond %{REQUEST_URI} (id_rsa|id_dsa|id_ed25519|id_ecdsa|authorized_keys|known_hosts|\.pem$|\.key$|\.pfx$|\.p12$) [NC]
+RewriteRule .* - [F,L]
+
+# Block shell/rce-style PHP filenames commonly used by scanners
+RewriteCond %{REQUEST_URI} (shell\.php|wso\.php|c99\.php|b374k|filemanager|adminer|phpinfo\.php|info\.php|pi\.php|test\.php) [NC]
+RewriteRule .* - [F,L]
+
+# Block path traversal / filesystem access attempts
+RewriteCond %{REQUEST_URI} (@fs/|\.\.%2[fF]|\.\./|/etc/passwd|/proc/self/environ) [NC]
+RewriteRule .* - [F,L]
+
+# Block debug/framework introspection endpoints
+RewriteCond %{REQUEST_URI} (_profiler|_ignition|_debugbar|__debug__|telescope/requests|elmah\.axd|trace\.axd|actuator|nginx_status|server-status|server-info) [NC]
+RewriteRule .* - [F,L]
+
+# Block cloud provider config/CLI probes
+RewriteCond %{REQUEST_URI} (\.aws/|\.oci/|\.azure/|\.config/gcloud|hcloud/cli|\.vultr-cli|linode-cli|\.ovh\.conf) [NC]
+RewriteRule .* - [F,L]
+
+# Block AI-tool / API-key config probes
+RewriteCond %{REQUEST_URI} (\.anthropic/|\.openai/|anthropic/credentials|\.hermes/) [NC]
+RewriteRule .* - [F,L]
+
+# ============================================
+# Original site logic
+# ============================================
 
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=302,L,NE]
 
-RewriteCond %{REQUEST_URI}  !\.(css|js|html?|jpg|gif|png|pdf|woff|woff2)$
+RewriteCond %{REQUEST_URI} !\.(css|js|html?|jpg|gif|png|pdf|woff|woff2)$
 RewriteRule ^ public/index.php [L]
